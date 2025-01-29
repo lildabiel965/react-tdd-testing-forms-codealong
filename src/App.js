@@ -2,8 +2,17 @@ import { useState } from "react";
 
 function App() {
   const [pepperoniIsChecked, setPepperoniIsChecked] = useState(false);
-
+  const [size, setSize] = useState("small");
+  const [contactInfo, setContactInfo] = useState("");
+  const [orderIsSubmitted, setOrderIsSubmitted] = useState(false);
+  
   const togglePepperoni = (e) => setPepperoniIsChecked(e.target.checked);
+  const selectSize = (e) => setSize(e.target.value);
+  const updateContactField = (e) => setContactInfo(e.target.value);
+  const submitOrder = (e) => { 
+    e.preventDefault();
+    setOrderIsSubmitted(true);
+  };
 
   return (
     <div>
@@ -20,7 +29,29 @@ function App() {
           />
           <label htmlFor="pepperoni">Add pepperoni</label>
         </div>
+        <div>
+          <h3>Size</h3>
+          <label htmlFor="select-size">Select size: </label>
+          <select id="select-size" value={size} onChange={selectSize}>
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+        <div>
+          <h3>Contact Info</h3>
+          <label htmlFor="email">Enter your email address: </label>
+          <input
+            type="text"
+            value={contactInfo}
+            id="email"
+            placeholder="email address"
+            onChange={updateContactField}
+          />
+        </div>
+        <button type="submit">Submit Order</button>
       </form>
+      {orderIsSubmitted ? <h2>Thanks for your order!</h2> : null}
     </div>
   );
 }
